@@ -761,7 +761,7 @@ body {
   }
 
   .search-wrap {
-    width: 44px;
+    width: 40%;
     transition: width 0.25s;
   }
 
