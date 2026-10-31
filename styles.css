@@ -725,150 +725,144 @@ body {
 
 /* ===== 移动端适配 ===== */
 @media (max-width: 768px) {
-  .node-label {
-    font-size: 11px;
+  /* ---------- 基础 ---------- */
+  html, body {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+  }
+  #stage {
+    touch-action: none;   /* 阻止浏览器原生双指缩放/滚动 */
   }
 
-  .node-sub {
-    font-size: 8px;
-  }
-
+  /* ---------- 顶栏 ---------- */
   .topbar {
-    padding: 10px 14px;
-    gap: 10px;
+    padding: max(10px, env(safe-area-inset-top)) 12px 10px;
+    gap: 8px;
   }
+  .brand .seal { width: 32px; height: 32px; font-size: 15px; }
+  .brand h1 { font-size: 15px; letter-spacing: 1px; }
+  .brand .sub { display: none; }
 
-  .brand .seal {
-    width: 34px;
-    height: 34px;
-    font-size: 16px;
+  .search-wrap { width: 44px; transition: width 0.25s; }
+  .search-wrap.expanded { width: calc(100vw - 100px); }
+  .search-wrap input {
+    font-size: 13px;
+    padding: 8px 12px 8px 34px;
+    height: 38px;
   }
+  .search-wrap.expanded input { padding-right: 12px; }
+  .search-wrap svg { left: 12px; width: 15px; height: 15px; }
+  .search-results { max-height: 50vh; border-radius: 10px; }
 
-  .brand h1 {
-    font-size: 15px;
-    letter-spacing: 1px;
+  /* ---------- 统计条：移到顶栏下方，缩小 ---------- */
+  .stats {
+    top: calc(env(safe-area-inset-top) + 54px);
+    left: 12px;
+    right: auto;
+    padding: 6px 10px;
+    font-size: 11px;
+    border-radius: 8px;
   }
+  .stats b { font-size: 12px; }
 
-  .brand .sub {
+  /* ---------- 图例：默认收起为小按钮 ---------- */
+  .legend {
+    left: 12px;
+    bottom: calc(env(safe-area-inset-bottom) + 14px);
+    padding: 8px 10px;
+    font-size: 11px;
     display: none;
   }
+  .legend.show { display: block; }
+  .legend h4 { font-size: 11px; margin-bottom: 6px; }
+  .legend .row { margin: 4px 0; gap: 6px; }
+  .legend .swatch { width: 12px; height: 12px; }
 
-  .search-wrap {
-    width: 160px;
-  }
-
-  .search-wrap input {
-    font-size: 12px;
-    padding: 8px 12px 8px 34px;
-  }
-
-  .search-wrap svg {
-    left: 10px;
-    width: 14px;
-    height: 14px;
-  }
-
-  .search-results {
-    max-height: 50vh;
-  }
-
+  /* ---------- 控制按钮：右侧竖排，触控区 44px ---------- */
   .controls {
     right: 10px;
-    bottom: 12px;
+    bottom: calc(env(safe-area-inset-bottom) + 12px);
     gap: 6px;
   }
-
   .ctrl-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
+    width: 44px; height: 44px;
+    border-radius: 12px;
+  }
+  .ctrl-btn svg { width: 20px; height: 20px; }
+  .zoom-indicator {
+    font-size: 10px;
+    padding: 2px 0;
   }
 
-  .ctrl-btn svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .legend {
-    left: 10px;
-    bottom: 12px;
-    padding: 10px 12px;
-    font-size: 11px;
-  }
-
-  .legend h4 {
-    font-size: 11px;
-    margin-bottom: 6px;
-  }
-
-  .legend .row {
-    margin: 4px 0;
-    gap: 6px;
-  }
-
-  .legend .swatch {
-    width: 12px;
-    height: 12px;
-  }
-
+  /* ---------- 小地图：挪到右上角，缩小 ---------- */
   .minimap {
+    top: calc(env(safe-area-inset-top) + 54px);
     right: 10px;
-    bottom: 80px;
-    width: 110px;
-    height: 78px;
+    bottom: auto;
+    width: 100px;
+    height: 72px;
+    border-radius: 10px;
+    opacity: 0.85;
   }
+  .minimap-label { font-size: 9px; top: 4px; left: 6px; }
 
+  /* ---------- 节点文字 ---------- */
+  .node-label { font-size: 11px; }
+  .node-sub   { font-size: 8px; }
+
+  /* ---------- 详情面板：底部抽屉 + 拖拽手柄 ---------- */
   .detail-panel {
     top: auto;
     bottom: 0;
     left: 0;
     right: 0;
     width: 100% !important;
-    max-height: 60vh;
+    max-height: 62vh;
+    overflow-y: auto;
     transform: translateY(100%);
     border-radius: 18px 18px 0 0;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    padding: 14px 18px calc(env(safe-area-inset-bottom) + 18px);
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   }
-
   .detail-panel.show {
     right: 0 !important;
     transform: translateY(0);
   }
-
+  .detail-panel::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 50%;
+    transform: translateX(-50%);
+    width: 36px; height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.18);
+  }
   .detail-panel .avatar {
-    width: 52px;
-    height: 52px;
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
-
-  .detail-panel .name {
+    width: 48px; height: 48px;
     font-size: 20px;
+    margin-bottom: 8px;
   }
+  .detail-panel .name { font-size: 19px; }
+  .detail-panel .title { margin-bottom: 10px; }
+  .detail-panel .field { padding: 8px 0; font-size: 12px; }
 
-  .detail-panel .title {
-    margin-bottom: 12px;
-  }
-
+  /* ---------- 设置面板：全屏 ---------- */
   .settings-panel {
     left: 0 !important;
     right: 0;
     top: 0;
     width: 100% !important;
-    height: 100vh;
+    height: 100dvh;
     border-radius: 0;
+    padding: max(14px, env(safe-area-inset-top)) 18px
+             calc(env(safe-area-inset-bottom) + 18px);
+    overflow-y: auto;
   }
+  .settings-panel.show { left: 0 !important; }
+  .settings-group .color-row { gap: 8px; }
+  .settings-group .color-row input { width: 46px; height: 46px; }
 
-  .settings-panel.show {
-    left: 0 !important;
-  }
-
-  .settings-group .color-row {
-    gap: 8px;
-  }
-
-  .settings-group .color-row input {
-    width: 44px;
-    height: 44px;
-  }
+  /* ---------- 世代标签在手机上隐藏（在 JS 里也跳过渲染） ---------- */
+  .gen-labels { display: none; }
 }
